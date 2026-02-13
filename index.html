@@ -304,29 +304,25 @@
         </div>
     </section>
 
-    <script>
-        // Sparkles generator
-        const sparkleContainer = document.getElementById('sparkle-container');
-const emojis = ['✨', '💖'];
+<script>
+document.addEventListener("DOMContentLoaded", function() {
 
-for (let i = 0; i < 20; i++) {
-    const sparkle = document.createElement('div');
-    sparkle.className = 'sparkle';
-    
-    // Pick random emoji
-    sparkle.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+    // --- SPARKLES ---
+    const sparkleContainer = document.getElementById('sparkle-container');
+    const emojis = ['✨', '💖'];
 
-    // Random position
-    sparkle.style.left = Math.random() * 100 + '%';
-    sparkle.style.top = Math.random() * 100 + '%';
+    for (let i = 0; i < 20; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+        sparkle.style.left = Math.random() * 100 + '%';
+        sparkle.style.top = Math.random() * 100 + '%';
+        sparkle.style.animationDelay = Math.random() * 3 + 's';
+        sparkleContainer.appendChild(sparkle);
+    }
 
-    // Random animation delay (so blinking is not synced)
-    sparkle.style.animationDelay = Math.random() * 3 + 's';
-
-    sparkleContainer.appendChild(sparkle);
-}
-
-        const letterContent = `Happy Valentine, Sayang!,
+    // --- LETTER CONTENT ---
+    const letterContent = `Happy Valentine, Sayang!,
 
 Selamat hari kasih sayang, cintakuu! semoga kita selalu sayang sama satu sama lain yaa!  
 
@@ -336,42 +332,46 @@ I hope you do feel the same yaa sayangg even when I'm not your first valentine, 
 
 Semoga nanti kita ketemu terus di hari valentine di tahun tahun yang akan datang yaa! Love youu, sayanggkuuu`;
 
-        function openLetter() {
+    // --- MAKE FUNCTION GLOBAL FOR onclick ---
+    window.openLetter = function() {
 
-    document.getElementById('envelope').classList.add('open');
-    
-    setTimeout(() => {
-        document.getElementById('transition-page')
-            .scrollIntoView({ behavior: 'smooth' });
-        
-        const title = document.getElementById('valTitle');
-        title.classList.add('trigger-animation');
+        document.getElementById('envelope').classList.add('open');
         
         setTimeout(() => {
-            document.getElementById('letter-section')
+
+            document.getElementById('transition-page')
                 .scrollIntoView({ behavior: 'smooth' });
-            setTimeout(startTyping, 800);
-        }, 3500);
+            
+            const title = document.getElementById('valTitle');
+            title.classList.add('trigger-animation');
+            
+            setTimeout(() => {
+                document.getElementById('letter-section')
+                    .scrollIntoView({ behavior: 'smooth' });
+                setTimeout(startTyping, 800);
+            }, 3500);
 
-    }, 600);
-}
+        }, 600);
+    }
 
-
-        function startTyping() {
-            const element = document.getElementById('typewriter');
-            let i = 0;
-            element.innerHTML = ""; 
-            function type() {
-                if (i < letterContent.length) {
-                    element.innerHTML += letterContent.charAt(i);
-                    i++;
-                    setTimeout(type, 31);
-                }
+    function startTyping() {
+        const element = document.getElementById('typewriter');
+        let i = 0;
+        element.innerHTML = "";
+        
+        function type() {
+            if (i < letterContent.length) {
+                element.innerHTML += letterContent.charAt(i);
+                i++;
+                setTimeout(type, 31);
             }
-            type();
         }
-    </script>
+
+        type();
+    }
+
+});
+</script>
+
 </body>
-
 </html> 
-
