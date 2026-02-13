@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For my dearest girlfriend</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Quicksand:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fff5f7;
+            --accent-pink: #f79cae;
+            --heart-red: #d17a8a;
+            --text-color: #5a4a4a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        /* --- SPARKLES --- */
+        .sparkle-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 99;
+        }
+
+        .sparkle {
+            position: absolute;
+            color: #ffd700;
+            font-size: 10px;
+            opacity: 0;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 0.7; transform: scale(1.2) rotate(20deg); }
+        }
+
+        section {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 20px;
+        }
+
+        /* --- ENVELOPE --- */
+        #landing {
+            background: linear-gradient(180deg, #fff5f7 0%, #ffe4e9 100%);
+        }
+
+        .envelope-container {
+            position: relative;
+            width: 200px;
+            height: 140px;
+            background: #fdfcf0;
+            border: 2px solid #e6d5d8;
+            border-radius: 5px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.5s;
+        }
+
+        .envelope-container::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            border-left: 100px solid transparent;
+            border-right: 100px solid transparent;
+            border-top: 80px solid #f1e1e4;
+            transform-origin: top;
+            transition: transform 0.6s;
+            z-index: 2;
+        }
+
+        .seal {
+            position: absolute;
+            z-index: 3;
+            font-size: 30px;
+            transition: 0.5s;
+        }
+
+        .envelope-container.open::after { transform: rotateX(180deg); z-index: 0; }
+        .envelope-container.open .seal { opacity: 0; transform: scale(2); }
+
+        .open-btn {
+            margin-top: 60px;
+            background: white;
+            padding: 12px 30px;
+            border-radius: 20px;
+            border: 1px solid var(--accent-pink);
+            color: var(--heart-red);
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        /* --- TRANSITION PAGE (FIXED) --- */
+        #transition-page {
+            background-color: #fff5f7;
+            text-align: center;
+        }
+
+        .valentine-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            color: var(--heart-red);
+            opacity: 0; /* Hidden by default */
+        }
+
+        /* The class we add via JS to trigger animation only when clicked */
+        .trigger-animation {
+            animation: fadeInOut 3.5s forwards;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: scale(0.9); }
+            30% { opacity: 1; transform: scale(1); }
+            70% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(1.05); }
+        }
+
+        /* --- LETTER --- */
+        #letter-section {
+            background-color: #ffe4e9;
+        }
+
+        .paper {
+            background: #fff;
+            width: 95%;
+            max-width: 500px;
+            height: auto;
+            min-height: 80%;
+            padding: 25px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            background-image: radial-gradient(#f1f1f1 1.2px, transparent 1.2px);
+            background-size: 24px 24px;
+            overflow: hidden;
+        }
+
+        .corner-photo {
+            float: right;
+            shape-outside: inset(0);
+            width: 100px;
+            height: 130px;
+            margin-left: 15px;
+            margin-bottom: 5px;
+            background: #fff;
+            padding: 4px;
+            border: 1px solid #ddd;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.1);
+            transform: rotate(3deg);
+            object-fit: cover;
+            margin-top: 10px;
+        }
+
+        .letter-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #444;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        /* --- GALLERY --- */
+        #gallery {
+            background: white;
+            justify-content: center;
+            padding: 60px 0;
+            height: auto;
+            min-height: 100vh;
+        }
+
+        .carousel-container {
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            margin-bottom: 50px;
+        }
+
+        .track {
+            display: flex;
+            width: calc(180px * 12);
+            animation: infiniteScroll 20s linear infinite;
+        }
+
+        .track img {
+            width: 160px;
+            height: 220px;
+            margin: 0 10px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        @keyframes infiniteScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-180px * 6)); }
+        }
+
+        /* --- SPECIAL MIDDLE TEXT --- */
+        .middle-message {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            color: var(--heart-red);
+            text-align: center;
+            margin: 40px 0;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .footer-text {
+            margin-top: 20px;
+            margin-bottom: 50px;
+            text-align: center;
+            width: 85%;
+            font-size: 0.9rem;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+
+
+    <div class="sparkle-container" id="sparkle-container"></div>
+
+    <section id="landing">
+        <div class="envelope-container" id="envelope" onclick="openLetter()">
+            <div class="seal">❤️</div>
+        </div>
+        <div class="open-btn" onclick="openLetter()">Be My Valentine</div>
+    </section>
+
+    <section id="transition-page">
+        <h1 class="valentine-title" id="valTitle">Happy Valentine Day, Sayangkuu</h1>
+    </section>
+
+    <section id="letter-section">
+        <div class="paper">
+            <img src="https://ardesimagestorage.wordpress.com/wp-content/uploads/2026/02/ff534e99-f0e9-47bc-9adc-7c0d6b1711cd.jpg" class="corner-photo" alt="Us">
+            <div id="typewriter" class="letter-text"></div>
+        </div>
+    </section>
+
+    <section id="gallery">
+        <div class="carousel-container">
+            <div class="track">
+                <img src="https://ardesimagestorage.wordpress.com/wp-content/uploads/2025/12/whatsapp-image-2025-12-18-at-12.06.32-pm.jpeg">
+                <img src="https://ardesimagestorage.wordpress.com/wp-content/uploads/2025/12/whatsapp-image-2025-12-18-at-12.41.02-pm-1.jpeg">
+                <img src="https://ardesimagestorage.wordpress.com/wp-content/uploads/2025/12/whatsapp-image-2025-12-18-at-12.06.33-pm.jpeg">
+                <img src="https://ardesimagestorage.wordpress.com/wp-content/uploads/2025/12/whatsapp-image-2025-12-18-at-12.40.50-pm.jpeg">
+                <img src="https://ardesimagestorage.wordpress.com/wp-content/uploads/2025/12/whatsapp-image-2025-12-18-at-12.40.50-pm-1.jpeg">
+                <img src="https://ardesimagestorage.wordpress.com/wp-content/uploads/2025/12/whatsapp-image-2025-12-18-at-12.41.02-pm.jpeg">
+                <img src="https://ardesimagestorage.wordpress.com/wp-content/uploads/2026/02/2a926f0a-0553-49ed-845d-1e896e81d910.jpg">
+                <img src="https://ardesimagestorage.wordpress.com/wp-content/uploads/2026/02/2dafb444-73cb-4434-8164-6691c9b4724a.jpg"> 
+                <img src="https://ardesimagestorage.wordpress.com/wp-content/uploads/2026/02/4f74f05e-3659-4268-ab72-9ac94385c811.jpg">  
+                <img src="https://ardesimagestorage.wordpress.com/wp-content/uploads/2026/02/73a005ca-d959-45c8-ae8e-9aae0537cda8.jpg">  
+                <img src="https://ardesimagestorage.wordpress.com/wp-content/uploads/2026/02/74cc4b57-2649-4061-a952-f2eb57033f4c.jpg">  
+                <img src="https://ardesimagestorage.wordpress.com/wp-content/uploads/2026/02/ff534e99-f0e9-47bc-9adc-7c0d6b1711cd.jpg">  
+                <img src="https://ardesimagestorage.wordpress.com/wp-content/uploads/2026/02/20260104_192306.jpg">  
+                <img src="https://ardesimagestorage.wordpress.com/wp-content/uploads/2026/02/20260104_195714.jpg">  
+                <img src="https://ardesimagestorage.wordpress.com/wp-content/uploads/2026/02/20260104_201803.jpg">
+                <img src="https://ardesimagestorage.wordpress.com/wp-content/uploads/2026/02/20260104_204624.jpg">
+                <img src="https://ardesimagestorage.wordpress.com/wp-content/uploads/2026/02/fremio-photo-1767530796791.png">
+                <img src="https://ardesimagestorage.wordpress.com/wp-content/uploads/2026/02/fremio-photo-1767531052103.png">
+                <img src="https://ardesimagestorage.wordpress.com/wp-content/uploads/2026/02/fremio-photo-1767531227526.png">  
+
+            </div>
+        </div>
+
+        <div class="middle-message">
+            Happy Valentine Day, my love. Hope to see you again soon❤️
+        </div>
+
+        <div class="footer-text">
+            <hr style="border: 0; border-top: 1px solid #eee; margin-bottom: 20px; width: 50%; margin-left: 25%;">
+            May this be the first of many valentines  we spend side by side. <br>
+            <strong>Alde & Aica </strong>
+        </div>
+    </section>
+
+    <script>
+        // Sparkles generator
+        const sparkleContainer = document.getElementById('sparkle-container');
+const emojis = ['✨', '💖'];
+
+for (let i = 0; i < 20; i++) {
+    const sparkle = document.createElement('div');
+    sparkle.className = 'sparkle';
+    
+    // Pick random emoji
+    sparkle.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+
+    // Random position
+    sparkle.style.left = Math.random() * 100 + '%';
+    sparkle.style.top = Math.random() * 100 + '%';
+
+    // Random animation delay (so blinking is not synced)
+    sparkle.style.animationDelay = Math.random() * 3 + 's';
+
+    sparkleContainer.appendChild(sparkle);
+}
+
+        const letterContent = `Happy Valentine, Sayang!,
+
+Selamat hari kasih sayang, cintakuu! semoga kita selalu sayang sama satu sama lain yaa!  
+
+Tiba-tiba udah valentine aja, oiya btw, you're my first valentine ever and you'll always be my valentine for the rest of my life 💖.
+
+I hope you do feel the same yaa sayangg even when I'm not your first valentine, but that's okay ;)
+
+Semoga nanti kita ketemu terus di hari valentine di tahun tahun yang akan datang yaa! Love youu, sayanggkuuu`;
+
+        function openLetter() {
+            audio.play().then(() => {
+                audio.pause();
+                audio.currentTime = 133; 
+            }).catch(e => console.log("Audio ready"));
+
+            document.getElementById('envelope').classList.add('open');
+            
+            // 1. Wait for envelope animation to finish
+            setTimeout(() => {
+                // 2. Scroll to Transition Page
+                document.getElementById('transition-page').scrollIntoView({ behavior: 'smooth' });
+                
+                // 3. Trigger the "Happy Valentine Day" animation
+                const title = document.getElementById('valTitle');
+                title.classList.add('trigger-animation');
+                
+                // 4. Wait for the text animation (3.5s), then scroll to letter
+                setTimeout(() => {
+                    document.getElementById('letter-section').scrollIntoView({ behavior: 'smooth' });
+                    setTimeout(startTyping, 800);
+                }, 3500);
+
+            }, 600);
+        }
+
+        function startTyping() {
+            const element = document.getElementById('typewriter');
+            let i = 0;
+            element.innerHTML = ""; 
+            function type() {
+                if (i < letterContent.length) {
+                    element.innerHTML += letterContent.charAt(i);
+                    i++;
+                    setTimeout(type, 31);
+                }
+            }
+            type();
+        }
+
+        window.onscroll = function() {
+            const gallerySection = document.getElementById('gallery');
+            if (!gallerySection) return;
+            const position = gallerySection.getBoundingClientRect();
+
+            if (position.top < window.innerHeight - 100 && !musicStarted) {
+                audio.play().catch(e => console.log("Play failed: ", e));
+                musicStarted = true;
+            }
+        };
+    </script>
+</body>
+</html> 
