@@ -337,30 +337,25 @@ I hope you do feel the same yaa sayangg even when I'm not your first valentine, 
 Semoga nanti kita ketemu terus di hari valentine di tahun tahun yang akan datang yaa! Love youu, sayanggkuuu`;
 
         function openLetter() {
-            audio.play().then(() => {
-                audio.pause();
-                audio.currentTime = 133; 
-            }).catch(e => console.log("Audio ready"));
 
-            document.getElementById('envelope').classList.add('open');
-            
-            // 1. Wait for envelope animation to finish
-            setTimeout(() => {
-                // 2. Scroll to Transition Page
-                document.getElementById('transition-page').scrollIntoView({ behavior: 'smooth' });
-                
-                // 3. Trigger the "Happy Valentine Day" animation
-                const title = document.getElementById('valTitle');
-                title.classList.add('trigger-animation');
-                
-                // 4. Wait for the text animation (3.5s), then scroll to letter
-                setTimeout(() => {
-                    document.getElementById('letter-section').scrollIntoView({ behavior: 'smooth' });
-                    setTimeout(startTyping, 800);
-                }, 3500);
+    document.getElementById('envelope').classList.add('open');
+    
+    setTimeout(() => {
+        document.getElementById('transition-page')
+            .scrollIntoView({ behavior: 'smooth' });
+        
+        const title = document.getElementById('valTitle');
+        title.classList.add('trigger-animation');
+        
+        setTimeout(() => {
+            document.getElementById('letter-section')
+                .scrollIntoView({ behavior: 'smooth' });
+            setTimeout(startTyping, 800);
+        }, 3500);
 
-            }, 600);
-        }
+    }, 600);
+}
+
 
         function startTyping() {
             const element = document.getElementById('typewriter');
@@ -376,16 +371,8 @@ Semoga nanti kita ketemu terus di hari valentine di tahun tahun yang akan datang
             type();
         }
 
-        window.onscroll = function() {
-            const gallerySection = document.getElementById('gallery');
-            if (!gallerySection) return;
-            const position = gallerySection.getBoundingClientRect();
-
-            if (position.top < window.innerHeight - 100 && !musicStarted) {
-                audio.play().catch(e => console.log("Play failed: ", e));
-                musicStarted = true;
-            }
         };
     </script>
 </body>
+
 </html> 
